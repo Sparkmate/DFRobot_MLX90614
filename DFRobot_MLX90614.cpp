@@ -146,13 +146,13 @@ void DFRobot_MLX90614_I2C::enterSleepMode(bool mode)
     _pWire->endTransmission();
 
     DBG("enter sleep mode");
-  }else{
+  }else{/*
     #if defined(ESP32)
       _pWire->~TwoWire();
     #elif !defined(ESP8266)
       _pWire->end();
     #endif
-
+    */
     // wake up command, refer to the chip datasheet
     pinMode(SDA, OUTPUT);
     pinMode(SCL, OUTPUT);
@@ -162,12 +162,6 @@ void DFRobot_MLX90614_I2C::enterSleepMode(bool mode)
     digitalWrite(SCL, HIGH);
     digitalWrite(SDA, LOW);
     delay(50);
-
-    _pWire->begin();   // Wire.h（I2C）library function initialize wire library
-
-    #ifdef ESP8266
-      digitalWrite(SCL, LOW);
-    #endif
 
     _pWire->beginTransmission(_deviceAddr);
     _pWire->endTransmission();
